@@ -161,6 +161,7 @@ def decrypt(keys):
     al = []
     with open('al.json', 'r') as f:
         al = json.load(f)
+        f.close()
     count = 0
     for f,a in zip(ls,al):
         if a == 1:
