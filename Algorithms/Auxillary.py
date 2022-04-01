@@ -7,6 +7,7 @@ import  DES
 import random
 import os
 import math
+import Config
 
 
 def isprime(n):
@@ -108,17 +109,17 @@ def splitfiles(filename, filepath, destination = os.getcwd()):
 def encrypt(al, data):
     dict = {}
     # print("INsise enc")
-    r = RSA.RSA(0,userid=1,no_of_bits=128)
+    #r = RSA.RSA(0,userid=1,no_of_bits=128)
     des = DES.DES()
     k = des.Generate_Key_64()
     dict[2] = k
-    # print(k)
+
     counter = 0
-    # print(al)
+
     for d , a in zip(data,al):
-        # print(a)
-        # print(data)
+
         if a == 1:
+            r = RSA.RSA(0, userid=1, no_of_bits=128)
             name = "encrypted_part_" + str(counter) + ".txt"
             e = []
             for i in d:
