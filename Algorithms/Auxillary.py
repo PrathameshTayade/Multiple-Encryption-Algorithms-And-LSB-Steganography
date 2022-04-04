@@ -110,9 +110,9 @@ def encrypt(al, data):
     dict = {}
     # print("INsise enc")
     #r = RSA.RSA(0,userid=1,no_of_bits=128)
-    des = DES.DES()
-    k = des.Generate_Key_64()
-    dict[2] = k
+    # des = DES.DES()
+    # k = des.Generate_Key_64()
+    # dict[2] = k
 
     counter = 0
 
@@ -133,8 +133,11 @@ def encrypt(al, data):
             counter+=1
 
         elif a == 2:
-
+            des = DES.DES()
+            k = des.Generate_Key_64()
+            dict[counter] = k
             c = des.DES_Encrypt(d,k)
+
             c = c.encode()
 
             # print(type(c))
@@ -152,7 +155,7 @@ def encrypt(al, data):
 
 def decrypt(keys):
 
-    desk = keys.get(2)
+    # desk = keys.get(2)
     # print("desk",type(desk))
     # print(desk)
     import glob
@@ -169,6 +172,7 @@ def decrypt(keys):
             r = RSA.RSA(0,1,128)
             data = []
             with open(f,'r') as c:
+                print("Reading Lines for file ", count)
                 data = c.readlines()
                 data =data[0]
                 data = data.split(",")
@@ -183,6 +187,8 @@ def decrypt(keys):
 
         elif a== 2:
             d = ""
+            desk =  keys[count]
+            print(desk)
             with open(f,'rb') as c:
                 data = c.read()
                 data = data.decode()

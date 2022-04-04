@@ -62,12 +62,13 @@ while choice < 3:
     choice = int(input("1. Encryption \n2. Decryption\n"))
 
     if choice == 1:
-        sd = a.splitfiles(filename= "ftest.txt", filepath= "F:\\Major Project\\Multiple-Encryption-Algorithms-And-LSB-Steganography\\Algorithms")
+        sd = a.splitfiles(filename= "big_file.txt", filepath= "F:\\Major Project\\Multiple-Encryption-Algorithms-And-LSB-Steganography\\Algorithms")
         al = a.generate_al(len(sd))
         # print(sd)
         # print(al)
         # print("calling encr")
         d = a.encrypt(al, sd)
+        print(d)
         # print("end encr")
         # print(d.get(2))
         # print(type(str(d.get(2))))
