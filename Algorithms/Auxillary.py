@@ -1,4 +1,5 @@
 import json
+import shutil
 
 import numpy as np
 from skimage.io import imread, imshow,imsave
@@ -7,6 +8,8 @@ import  DES
 import random
 import os
 import math
+import LSB_Steganography as lsb
+import shutil as sht
 import Config
 
 
@@ -62,7 +65,7 @@ def splitfiles(filename, filepath, destination = os.getcwd()):
 
 
     else:
-        randomno = random.randint(2,10)
+        randomno = random.randint(2,9)
         if isprime(n):
 
             temp =n-1
@@ -78,7 +81,7 @@ def splitfiles(filename, filepath, destination = os.getcwd()):
 
             while(n%randomno!=0):
 
-                randomno = random.randint(2,10)
+                randomno = random.randint(2,9)
 
     final = np.array(final)
     if(len(last)==0):
@@ -155,6 +158,8 @@ def encrypt(al, data):
 
 def decrypt(keys):
 
+    k = Getkeys()
+    keycount = 0
     # desk = keys.get(2)
     # print("desk",type(desk))
     # print(desk)
@@ -187,7 +192,8 @@ def decrypt(keys):
 
         elif a== 2:
             d = ""
-            desk =  keys[count]
+            #desk =  keys[count]
+            desk = k[keycount: keycount+8 ]
             print(desk)
             with open(f,'rb') as c:
                 data = c.read()
@@ -204,6 +210,7 @@ def decrypt(keys):
                 print("---------------")
                 x.write(d)
                 x.close()
+            keycount += 8
 
 
 
@@ -214,6 +221,7 @@ def decrypt(keys):
         count += 1
 
 
+    mergeFiles()
 
 
 
@@ -231,6 +239,32 @@ def generate_al(n):
         al.append(random.randint(1, 2))
 
     return  al
+
+
+def Getkeys():
+    k = ""
+    with open("meta.txt", 'r') as f:
+        m = f.readlines()
+        f.close()
+    rsa = RSA.RSA(0,1,128)
+    l = []
+    m = m[0]
+    m = m.split()
+
+    for i in m:
+        l.append(rsa.decryption(int(i)))
+    k = lsb.decode("stegoimg.png" , l[0],l[1],l[2])
+    return k
+
+
+def mergeFiles():
+    import glob
+    ls = glob.glob("decrypted_part*.txt")
+    with open("message.txt", 'wb') as actmsg:
+        for i in ls:
+            with open(i ,'rb') as f:
+                shutil.copyfileobj(f,actmsg)
+
 
 
 

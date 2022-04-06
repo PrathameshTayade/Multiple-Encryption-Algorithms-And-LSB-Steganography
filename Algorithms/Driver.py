@@ -6,7 +6,7 @@ import  RSA as rsa
 import codecs
 import binascii
 import DES as d
-
+import LSB_Steganography as lsb
 # choice = int(input("1. Encryption \n2. Decryption"))
 # dict = {}
 # if choice == 1:
@@ -64,19 +64,42 @@ while choice < 3:
     if choice == 1:
         sd = a.splitfiles(filename= "big_file.txt", filepath= "F:\\Major Project\\Multiple-Encryption-Algorithms-And-LSB-Steganography\\Algorithms")
         al = a.generate_al(len(sd))
-        # print(sd)
-        # print(al)
-        # print("calling encr")
+
         d = a.encrypt(al, sd)
+        k = ""
+        for i in d.keys():
+            k = k+ d[i]
+        s,e,r = lsb.encode("COVER_2.png", k)
+
+        rsa = RSA.RSA(0,1,128)
+        s = rsa.encryption(1,s)
+        e = rsa.encryption(1, e)
+        r = rsa.encryption(1, r)
+        with open('meta.txt','w') as f:
+            f.write(str(s) + " " + str(e)+ " " +str(r))
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
         print(d)
-        # print("end encr")
-        # print(d.get(2))
-        # print(type(str(d.get(2))))
+
     elif choice == 2:
-        # print(d)
+
+
         k = d.get(2)
-        # print(k)
-        a.decrypt(d)
+
+        a.decrypt(k)
 
 
 # for d,a in zip(sd,al):
