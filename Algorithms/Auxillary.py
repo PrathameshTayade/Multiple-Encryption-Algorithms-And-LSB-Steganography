@@ -167,24 +167,29 @@ def decrypt(keys):
     ls = glob.glob("encrypted_part_*.txt")
     if len(ls) == 0:
         raise Exception("No Encrypted File Found")
+    ls.sort(key=len)
     al = []
     with open('al.json', 'r') as f:
         al = json.load(f)
         f.close()
     count = 0
     for f,a in zip(ls,al):
+
         if a == 1:
             r = RSA.RSA(0,1,128)
             data = []
-            with open(f,'r') as c:
-                print("Reading Lines for file ", count)
+            with open(f) as c:
+                # print("Reading Lines for file ", count)
+
                 data = c.readlines()
-                data =data[0]
-                data = data.split(",")
-                s = ""
-                for i in data:
-                    s =s + chr(r.decryption(int(i)))
                 c.close()
+            data =data[0]
+            data = data.split(",")
+            #print(data)
+            s = ""
+            for i in data:
+                s =s + chr(r.decryption(int(i)))
+
             name = "decrypted_part" + str(count)  + ".txt"
             with open(name, 'w') as v:
                 v.write(s)
@@ -194,7 +199,7 @@ def decrypt(keys):
             d = ""
             #desk =  keys[count]
             desk = k[keycount: keycount+8 ]
-            print(desk)
+            # print(desk)
             with open(f,'rb') as c:
                 data = c.read()
                 data = data.decode()
@@ -204,10 +209,7 @@ def decrypt(keys):
             d = str(d)
             name = "decrypted_part" + str(count)  + ".txt"
             with open(name, "w") as x:
-                print("---------------")
-                print(count)
-                print(d)
-                print("---------------")
+
                 x.write(d)
                 x.close()
             keycount += 8
