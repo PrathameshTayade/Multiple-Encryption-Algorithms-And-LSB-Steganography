@@ -156,7 +156,7 @@ def encrypt(al, data):
     return  dict
 
 
-def decrypt(keys):
+def decrypt():
 
     k = Getkeys()
     keycount = 0
@@ -262,6 +262,7 @@ def Getkeys():
 def mergeFiles():
     import glob
     ls = glob.glob("decrypted_part*.txt")
+    ls.sort(key=len)
     with open("message.txt", 'wb') as actmsg:
         for i in ls:
             with open(i ,'rb') as f:

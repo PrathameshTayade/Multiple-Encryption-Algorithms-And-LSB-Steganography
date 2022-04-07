@@ -1,3 +1,6 @@
 decrypted_part*.txt
 encrypted_part_*.txt
 splitted_part_*.txt
+/Algorithms/.idea
+/Algorithms/.ipynb_checkpoints
+/Algorithms/__pycache__
